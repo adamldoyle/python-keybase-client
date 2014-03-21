@@ -113,9 +113,3 @@ def login(username, password):
                                       'login_session': login_session}).json()
 
     return login_obj['session'], login_obj['me']
-
-
-name = 'adamdoyle'
-password = 'cX5FdGrysVnDaHL'
-
-#print(login(name, password))
