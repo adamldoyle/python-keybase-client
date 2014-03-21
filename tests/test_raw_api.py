@@ -17,16 +17,6 @@ import unittest
 from keybaseclient import raw_api
 
 
-class MockResponse(object):
-
-    def __init__(self, url, params, status_code, text, json):
-        self.request_url = url
-        self.request_params = params
-        self.status_code = status_code
-        self.text = text
-        self.json = lambda: json
-
-
 class TestMakeRequest(unittest.TestCase):
 
     def test_successful_request_returns_response(self):
@@ -62,7 +52,7 @@ class TestMakeRequest(unittest.TestCase):
             mock_method.assert_called_once_with(url, params=params)
 
             self.assertIsNone(e.status)
-            self.assertEqual(mock_response.text, e.args[0])
+            self.assertEqual(mock_response.text, str(e))
             return
 
         self.fail('Proper exception not thrown')
@@ -84,7 +74,7 @@ class TestMakeRequest(unittest.TestCase):
             mock_method.assert_called_once_with(url, params=params)
 
             self.assertEqual(json['status'], e.status)
-            self.assertEqual(json['status']['desc'], e.args[0])
+            self.assertEqual(json['status']['desc'], str(e))
             return
 
         self.fail('Proper exception not thrown')
@@ -141,7 +131,7 @@ class TestGenerateHmacPwh(unittest.TestCase):
         try:
             raw_api._generate_hmac_pwh(None, salt, None)
         except (binascii.Error, TypeError) as e:
-            self.assertEqual('Non-hexadecimal digit found', e.args[0])
+            self.assertEqual('Non-hexadecimal digit found', str(e))
             return
 
         self.fail('Proper exception not thrown')
@@ -154,7 +144,7 @@ class TestGenerateHmacPwh(unittest.TestCase):
         try:
             raw_api._generate_hmac_pwh(password, salt, login_session)
         except (binascii.Error, TypeError) as e:
-            self.assertEqual('Incorrect padding', e.args[0])
+            self.assertEqual('Incorrect padding', str(e))
             return
 
         self.fail('Proper exception not thrown')
