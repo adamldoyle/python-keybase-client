@@ -51,7 +51,7 @@ class TestMakeRequest(unittest.TestCase):
         except raw_api.InvalidRequestException as e:
             mock_method.assert_called_once_with(url, params=params)
 
-            self.assertIsNone(e.status)
+            self.assertTrue(e.status is None)
             self.assertEqual(mock_response.text, str(e))
             return
 
