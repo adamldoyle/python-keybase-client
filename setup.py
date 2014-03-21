@@ -18,6 +18,7 @@ if sys.argv[-1] == 'publish':
 readme = open('README.rst').read()
 history = open('HISTORY.rst').read().replace('.. :changelog:', '')
 requirements = [str(ir.req) for ir in parse_requirements('requirements.txt')]
+trequirements = [str(ir.req) for ir in parse_requirements('trequirements.txt')]
 
 setup(
     name='python-keybase-client',
@@ -33,6 +34,7 @@ setup(
     package_dir={'keybaseclient': 'keybaseclient'},
     include_package_data=True,
     install_requires=requirements,
+    tests_require=trequirements,
     license="BSD",
     zip_safe=False,
     keywords='python-keybase-client',
